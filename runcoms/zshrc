@@ -43,3 +43,5 @@ eval `dircolors ~/.dircolors`
 # color ls
 alias ls="ls --color=auto"
 
+EDITOR=/usr/bin/vim
+
