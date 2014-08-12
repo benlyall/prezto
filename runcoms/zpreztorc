@@ -35,9 +35,7 @@ zstyle ':prezto:load' pmodule \
   'completion' \
   'tmux' \
   'git' \
-  'history-substring-search' \
-  'syntax-highlighting' \
-  'prompt'
+  'history-substring-search'
 
 #
 # Editor
