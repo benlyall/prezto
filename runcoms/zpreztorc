@@ -29,9 +29,13 @@ zstyle ':prezto:load' pmodule \
   'editor' \
   'history' \
   'directory' \
+  'git' \
+  'python' \
   'spectrum' \
   'utility' \
   'completion' \
+  'tmux' \
+  'syntax-highlighting' \
   'prompt'
 
 #
