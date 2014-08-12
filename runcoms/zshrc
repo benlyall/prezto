@@ -12,3 +12,34 @@ fi
 
 # Customize to your needs...
 
+# add virtualenv stuff
+if [[ -r "`which virtualenvwrapper.sh`" ]]; then
+  export WORKON_HOME=$HOME/.virtualenvs
+  export PROJECT_HOME=$HOME/Development
+  if [[ -r "/usr/local/bin/python" ]]; then
+    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+  fi
+  export VIRTUALENVWRAPPER_VIRTUALENV_ARGS="--no-site-packages"
+  export PIP_VIRTUALENV_BASE=$WORKON_HOME
+  export PIP_RESPECT_VIRTUALENV=true
+  source `which virtualenvwrapper.sh`
+fi
+
+# setup path
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# add coreutils to path (only for OSX)
+if [[ -d /usr/local/opt/coreutils/libexec/gnubin ]]; then
+  export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+fi
+
+# setup dircolors
+eval `dircolors ~/.dircolors`
+
+#fancy prompt
+. ~/.shell_prompt.sh
+
+# color ls
+alias ls="ls --color=auto"
+
