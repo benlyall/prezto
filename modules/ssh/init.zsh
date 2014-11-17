@@ -10,6 +10,12 @@ if [[ "$OSTYPE" == darwin* ]] || (( ! $+commands[ssh-agent] )); then
   return 1
 fi
 
+platform_ps="ps -U $USER -o pid,ucomm"
+
+if [[ "$OSTYPE" == "cygwin" ]]; then
+    platform_ps="ps -s | tr -s ' ' | cut -d' '  -f2,5"
+fi
+
 # Set the path to the SSH directory.
 _ssh_dir="$HOME/.ssh"
 
@@ -25,8 +31,14 @@ if [[ ! -S "$SSH_AUTH_SOCK" ]]; then
   source "$_ssh_agent_env" 2> /dev/null
 
   # Start ssh-agent if not started.
-  if ! ps -U "$USER" -o pid,ucomm | grep -q "${SSH_AGENT_PID} ssh-agent"; then
-    eval "$(ssh-agent | sed '/^echo /d' | tee "$_ssh_agent_env")"
+  if [[ "$OSTYPE" == "cygwin" ]]; then
+      if ! ps -s | tr -s ' ' | cut -d' ' -f 2,5 | grep -q "${SSH_AGENT_PID}.*ssh-agent"; then
+          eval "$(ssh-agent | sed '/^echo /d' | tee "$_ssh_agent_env")"
+      fi
+  else
+      if ! ps -U $USER -o pid,ucomm | grep -q "${SSH_AGENT_PID} ssh-agent"; then
+          eval "$(ssh-agent | sed '/^echo /d' | tee "$_ssh_agent_env")"
+      fi
   fi
 fi
 
